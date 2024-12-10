@@ -3,11 +3,11 @@ using UnityEngine;
 public class RepeatBackground : MonoBehaviour
 {
     private Vector3 startPos;
+    private float
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
-        startPos = transform.position;
-        
+    {        
+        startPos = transform.position;        
     }
 
     // Update is called once per frame
