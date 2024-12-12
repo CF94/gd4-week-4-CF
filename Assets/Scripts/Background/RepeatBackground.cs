@@ -3,19 +3,24 @@ using UnityEngine;
 public class RepeatBackground : MonoBehaviour
 {
     private Vector3 startPos;
-    private float
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float scrollSpeed = 10f;
+    private float repeatWidth;
+    private PlayerController playerControllerScript;
     void Start()
-    {        
-        startPos = transform.position;        
+    {
+        startPos = transform.position;
+        repeatWidth = GetComponent<BoxCollider>().size.x / 2;
+        playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        if (transform.position.x < startPos.x - 50)
+        transform.Translate (Vector3.left * scrollSpeed * Time.deltaTime);
+        if(transform.position.x < startPos.x - repeatWidth)
         {
             transform.position = startPos;
-        } 
+        }
+        if (playerControllerScript.isGameOver == true) scrollSpeed = 0f;
     }
 }

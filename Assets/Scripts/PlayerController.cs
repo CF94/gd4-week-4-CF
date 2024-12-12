@@ -1,5 +1,5 @@
+using Unity.VisualScripting;
 using UnityEngine;
-
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -12,37 +12,56 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier = 2;
     private int jumpCount = 0;
     private int maxJumpCount = 2;
+    public bool isGameOver = false;    
+    Animator anim;
+    public ParticleSystem dirtParticle;
+    public ParticleSystem explosionParticle;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;
+        Physics.gravity *= gravityModifier;        
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isOnGround || jumpCount < maxJumpCount)
-            {
+        {            
+            dirtParticle.Stop();
+            if (isOnGround && jumpCount < maxJumpCount && isGameOver == false)
+            {                
                 rb.linearVelocity = Vector3.zero;
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isOnGround = false;
-                jumpCount++;                
+                jumpCount++;
+                anim.SetTrigger("Jump_trig");                
             }
         }
-
+        
         if (Input.GetKeyDown(KeyCode.R))
         {
             Physics.gravity /= gravityModifier;
             SceneManager.LoadScene(0);
-        }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        isOnGround = true;
-        jumpCount = 0;
-    }
+        }        
+    }    
+    //void Jump() { }
 
+    private void OnCollisionEnter(Collision collision)    
+    {
+        //isOnGround = true;
+        if (collision.transform.tag == "Obstacle")
+        {
+            dirtParticle.Stop();
+            isGameOver = true;
+            anim.SetBool("Death_b", true);
+        }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+            dirtParticle.Play();
+        }        
+        jumpCount = 0;
+    }    
 }
