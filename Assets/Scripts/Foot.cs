@@ -7,9 +7,12 @@ public class Foot : MonoBehaviour
     public float yRange = 5;
     private PlayerController playerControllerScript;
     public ParticleSystem explosionParticle;
+    private AudioSource audioSource;
+    public AudioClip fartSound;
     void Start()
     {
         playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,6 +32,7 @@ public class Foot : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             explosionParticle.Play();
+            audioSource.PlayOneShot(fartSound);
         }
     }
 }

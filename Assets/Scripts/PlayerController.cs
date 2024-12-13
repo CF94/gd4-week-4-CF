@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -16,27 +17,33 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     public ParticleSystem dirtParticle;
     public ParticleSystem explosionParticle;
+    private AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip crashSound;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        Physics.gravity *= gravityModifier;        
+        Physics.gravity *= gravityModifier;     
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {            
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount && isGameOver == false)
+        {
+            Jump();
             dirtParticle.Stop();
-            if (isOnGround && jumpCount < maxJumpCount && isGameOver == false)
+            //if (isOnGround && jumpCount < maxJumpCount && isGameOver == false)
             {                
-                rb.linearVelocity = Vector3.zero;
+                /*rb.linearVelocity = Vector3.zero;
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isOnGround = false;
                 jumpCount++;
-                anim.SetTrigger("Jump_trig");                
+                anim.SetTrigger("Jump_trig");
+                audioSource.PlayOneShot(jumpSound);*/
             }
         }
         
@@ -46,7 +53,15 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(0);
         }        
     }    
-    //void Jump() { }
+    void Jump()
+    {
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        isOnGround = false;
+        jumpCount++;
+        anim.SetTrigger("Jump_trig");
+        audioSource.PlayOneShot(jumpSound);
+    }
 
     private void OnCollisionEnter(Collision collision)    
     {
@@ -56,6 +71,7 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
             isGameOver = true;
             anim.SetBool("Death_b", true);
+            audioSource.PlayOneShot(crashSound);
         }
         if (collision.gameObject.CompareTag("Ground"))
         {

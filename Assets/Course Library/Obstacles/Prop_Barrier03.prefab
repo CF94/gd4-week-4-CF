@@ -96,6 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445980}
   - component: {fileID: 1068118179012456477}
+  - component: {fileID: 8295864545093338374}
   m_Layer: 0
   m_Name: Prop_Barrier03
   m_TagString: Obstacle
@@ -132,3 +133,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xRange: -10
+--- !u!65 &8295864545093338374
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145980}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19999999, y: 0.39999962, z: 1}
+  m_Center: {x: -0.099999994, y: 1.5000002, z: -0.000000059604645}
