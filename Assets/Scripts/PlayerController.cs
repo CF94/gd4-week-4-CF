@@ -35,16 +35,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount && isGameOver == false)
         {
             Jump();
-            dirtParticle.Stop();
-            //if (isOnGround && jumpCount < maxJumpCount && isGameOver == false)
-            {                
-                /*rb.linearVelocity = Vector3.zero;
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                isOnGround = false;
-                jumpCount++;
-                anim.SetTrigger("Jump_trig");
-                audioSource.PlayOneShot(jumpSound);*/
-            }
+            dirtParticle.Stop()
         }
         
         if (Input.GetKeyDown(KeyCode.R))
