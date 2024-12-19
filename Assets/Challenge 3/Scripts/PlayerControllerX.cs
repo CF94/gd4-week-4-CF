@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControllerX : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class PlayerControllerX : MonoBehaviour
 
     public ParticleSystem explosionParticle;
     public ParticleSystem fireworksParticle;
-    //public Transform objectToMonitor;
+    
+    public Transform objectToMonitor;
 
     private AudioSource playerAudio;
     public AudioClip moneySound;
@@ -35,10 +37,16 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // While space is pressed and player is low enough, float up
-        //float yValue = objectToMonitor.position.y;
-        if (Input.GetKeyDown(KeyCode.Space) && gameOver == false && transform.position.y > 13)
+        float yValue = objectToMonitor.position.y;
+        if (Input.GetKeyDown(KeyCode.Space) && gameOver == false)
         {
             Jump();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Physics.gravity /= gravityModifier;
+            SceneManager.LoadScene(0);
         }
     }
 

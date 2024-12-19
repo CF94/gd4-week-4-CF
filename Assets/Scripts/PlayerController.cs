@@ -35,13 +35,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount && isGameOver == false)
         {
             Jump();
-            dirtParticle.Stop()
+            dirtParticle.Stop();
         }
         
         if (Input.GetKeyDown(KeyCode.R))
         {
             Physics.gravity /= gravityModifier;
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }        
     }    
     void Jump()
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(jumpSound);
     }
 
-    private void OnCollisionEnter(Collision collision)    
+    private void OnCollisionEnter(Collision collision)
     {
         //isOnGround = true;
         if (collision.transform.tag == "Obstacle")
